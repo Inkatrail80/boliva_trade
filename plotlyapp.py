@@ -1,6 +1,8 @@
 from dash import Dash, dcc, html, Input, Output, State
 import pandas as pd
 import plotly.express as px
+import os
+
 
 # Daten laden und zusammenführen
 df_2023 = pd.read_excel("EXPORTACIONES_2023p.xlsx")
@@ -211,5 +213,5 @@ app = Dash(__name__)
 server = app.server  # <- wichtig
 
 if __name__ == '__main__':
-    app.run(debug=True)
-
+    port = int(os.environ.get("PORT", 8050))  # Standardport 8050 lokal, $PORT auf Render
+    app.run(host='0.0.0.0', port=port, debug=False)
