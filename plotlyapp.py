@@ -206,5 +206,10 @@ def actualizar_dashboard(anio, mes, pais, producto, categoria, industria, activi
 
     return kpi_html, fig_pais, fig_producto, fig_departamento, fig_treemap
 
+
+app = Dash(__name__)
+server = app.server  # <- wichtig
+
 if __name__ == '__main__':
     app.run(debug=True)
+
