@@ -3,15 +3,21 @@ import pandas as pd
 import plotly.express as px
 import os
 
+# Daten laden
+try:
+    df_2023 = pd.read_excel("data/EXPORTACIONES_2023p.xlsx")
+    df_2024 = pd.read_excel("data/EXPORTACIONES_2024p.xlsx")
+except FileNotFoundError:
+    df_2023 = df_2024 = pd.DataFrame()
+    print("⚠️ Excel-Dateien nicht gefunden. Bitte prüfen.")
 
-# Daten laden und zusammenführen
-df_2023 = pd.read_excel("EXPORTACIONES_2023p.xlsx")
-df_2024 = pd.read_excel("EXPORTACIONES_2024p.xlsx")
 df = pd.concat([df_2023, df_2024], ignore_index=True)
 
-# Zahlenformat anpassen
-df['VALOR'] = df['VALOR'].round(0)
-df['KILNET'] = df['KILNET'].round(0)
+# Spalten runden
+for col in ['VALOR', 'KILNET']:
+    if col in df.columns:
+        df[col] = df[col].round(0)
+
 
 # Dash App initialisieren
 app = Dash(__name__)
@@ -209,9 +215,6 @@ def actualizar_dashboard(anio, mes, pais, producto, categoria, industria, activi
     return kpi_html, fig_pais, fig_producto, fig_departamento, fig_treemap
 
 
-app = Dash(__name__)
-server = app.server  # <- wichtig
-
 if __name__ == '__main__':
-    port = int(os.environ.get("PORT", 8050))  # Standardport 8050 lokal, $PORT auf Render
+    port = int(os.environ.get("PORT", 8050))
     app.run(host='0.0.0.0', port=port, debug=False)
