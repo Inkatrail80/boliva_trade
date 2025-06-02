@@ -25,7 +25,7 @@ server = app.server
 
 # Layout definieren
 app.layout = html.Div([
-    html.H1("📦 Exportaciones Bolivianas – Dashboard", style={"textAlign": "center"}),
+    html.H1("BO 📦 Exportaciones Bolivianas – Dashboard", style={"textAlign": "center"}),
 
     html.Div([
         html.Label("Año:"),
