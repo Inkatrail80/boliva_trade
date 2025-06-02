@@ -174,8 +174,8 @@ def actualizar_dashboard(anio, mes, pais, producto, categoria, industria, activi
         x="VALOR", y="DESPAIS", orientation='h', title="🌍 Valor exportado por país de destino", template="plotly_white"
     )
     fig_producto = px.bar(
-        dff.groupby("DESNAN")["VALOR"].sum().reset_index().query("VALOR > 10000").sort_values("VALOR", ascending=True).head(10),
-        x="VALOR", y="DESNAN", orientation='h', title="📦 Top 10 productos", template="plotly_white"
+        dff.groupby("DESACT2")["VALOR"].sum().reset_index().query("VALOR > 10000").sort_values("VALOR", ascending=True).head(10),
+        x="VALOR", y="DESACT2", orientation='h', title="📦 Top 10 productos", template="plotly_white"
     )
     fig_departamento = px.bar(
         dff.groupby("DESDEP")["VALOR"].sum().reset_index().query("VALOR > 100000").sort_values("VALOR", ascending=True),
