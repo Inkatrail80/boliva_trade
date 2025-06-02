@@ -161,11 +161,11 @@ def actualizar_dashboard(anio, mes, pais, producto, categoria, industria, activi
     total_peso = dff['KILNET'].sum()
 
     def chf_format(value):
-        return f"USD {value:,.0f}".replace(",", "'")
+        return f"{value:,.0f}".replace(",", "'")
 
     kpi_html = html.Div([
         html.H4("Departamentos seleccionados: " + ", ".join(departamentos) if departamentos else "Todos los departamentos"),
-        html.H4(f"Valor Total: {chf_format(total_valor)}"),
+        html.H4(f"Valor Total USD: {chf_format(total_valor)}"),
         html.H4(f"Peso Neto Total: {chf_format(total_peso)} kg")
     ])
 
