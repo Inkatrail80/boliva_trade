@@ -28,7 +28,7 @@ app.layout = html.Div([
     html.H1("BO 📦 Exportaciones Bolivianas – Dashboard", style={"textAlign": "center"}),
 
     html.Div([
-        html.Label("Año:"),
+        html.Label("Gestión:"),
         dcc.Dropdown(
             id='anio',
             options=[{"label": str(a), "value": a} for a in sorted(df['GESTION'].dropna().unique())],
@@ -47,25 +47,25 @@ app.layout = html.Div([
             options=[{"label": p, "value": p} for p in sorted(df['DESPAIS'].dropna().unique())],
             multi=True
         ),
-        html.Label("Producto (DESNAN):"),
+        html.Label("DESCRIPCION CODIGO ARANCELARIO NANDINA (NOMENCLATURA COMÚN DE LOS PAÍSES MIEMBROS DE LA COMUNIDAD ANDINA) (DESNAN):"),
         dcc.Dropdown(
             id='producto',
             options=[{"label": p, "value": p} for p in sorted(df['DESNAN'].dropna().unique())],
             multi=True
         ),
-        html.Label("Categoría económica (DESGCE3):"),
+        html.Label("GRANDES CATEGORIAS ECONÓMICAS (DESGCE3):"),
         dcc.Dropdown(
             id='categoria',
             options=[{"label": c, "value": c} for c in sorted(df['DESGCE3'].dropna().unique())],
             multi=True
         ),
-        html.Label("Industria (DESCIIU3):"),
+        html.Label("CLASIFICACIÓN INDUSTRIAL INTERNACIONAL UNIFORME DE TODAS LAS ACTIVIDADES ECONÓMICAS (DESCIIU3):"),
         dcc.Dropdown(
             id='industria',
             options=[{"label": i, "value": i} for i in sorted(df['DESCIIU3'].dropna().unique())],
             multi=True
         ),
-        html.Label("Actividad (DESACT2):"),
+        html.Label("PRODUCTO DE LA ACTIVIDAD ECONÓMICA (DESACT2):"),
         dcc.Dropdown(
             id='actividad',
             options=[{"label": a, "value": a} for a in sorted(df['DESACT2'].dropna().unique())],
@@ -77,7 +77,7 @@ app.layout = html.Div([
             options=[{"label": d, "value": d} for d in sorted(df['DESDEP'].dropna().unique())],
             multi=True
         )
-    ], style={"width": "25%", "float": "left", "padding": "20px"}),
+    ], style={"font": "Arial", "width": "25%", "float": "left", "padding": "20px"}),
 
     html.Div([
         html.Div(id='kpis'),
@@ -85,7 +85,7 @@ app.layout = html.Div([
         dcc.Graph(id='grafico-pais', clear_on_unhover=True),
         dcc.Graph(id='grafico-producto', clear_on_unhover=True),
         dcc.Graph(id='grafico-treemap', clear_on_unhover=True)
-    ], style={"width": "65%", "float": "right", "padding": "20px"})
+    ], style={"font": "Arial","width": "65%", "float": "right", "padding": "20px"})
 ])
 
 # Callbacks zur Synchronisierung von Klicks mit Dropdowns
