@@ -1,0 +1,38 @@
+/* Allgemeines Styling */
+body {
+    font-family: Arial, sans-serif;
+}
+
+/* Titel */
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Linke Filterspalte */
+.filter-panel {
+    width: 25%;
+    float: left;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* Rechte Ausgabespalte */
+.output-panel {
+    width: 65%;
+    float: right;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* Dropdown-Beschriftung */
+.filter-panel label {
+    font-weight: bold;
+    margin-top: 10px;
+    display: block;
+}
+
+/* Dropdown-Elemente */
+.filter-panel .Select {
+    margin-bottom: 15px;
+}
