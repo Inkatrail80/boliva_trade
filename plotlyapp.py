@@ -31,50 +31,60 @@ app.layout = html.Div([
         dcc.Dropdown(
             id='anio',
             options=[{"label": str(a), "value": a} for a in sorted(df['GESTION'].dropna().unique())],
-            value=sorted(df['GESTION'].dropna().unique())[-1]
+            value=sorted(df['GESTION'].dropna().unique())[-1],
+            optionHeight=50
         ),
         html.Label("Mes (opcional):"),
         dcc.Dropdown(
             id='mes',
             options=[{"label": "Todos", "value": "Todos"}] +
                     [{"label": str(m), "value": m} for m in sorted(df['MES'].dropna().unique())],
-            value="Todos"
+            value="Todos",
+            optionHeight=50
         ),
         html.Label("País de destino:"),
         dcc.Dropdown(
             id='pais',
             options=[{"label": p, "value": p} for p in sorted(df['DESPAIS'].dropna().unique())],
-            multi=True
+            multi=True,
+            optionHeight=50
+
         ),
         html.Label("DESCRIPCION CODIGO ARANCELARIO NANDINA:"),
         dcc.Dropdown(
             id='producto',
             options=[{"label": p, "value": p} for p in sorted(df['DESNAN'].dropna().unique())],
-            multi=True
+            multi=True,
+            optionHeight=50
         ),
         html.Label("GRANDES CATEGORIAS ECONÓMICAS:"),
         dcc.Dropdown(
             id='categoria',
             options=[{"label": c, "value": c} for c in sorted(df['DESGCE3'].dropna().unique())],
-            multi=True
+            multi=True,
+            optionHeight=50
+
         ),
         html.Label("CLASIFICACIÓN INDUSTRIAL INTERNACIONAL:"),
         dcc.Dropdown(
             id='industria',
             options=[{"label": i, "value": i} for i in sorted(df['DESCIIU3'].dropna().unique())],
-            multi=True
+            multi=True,
+            optionHeight=50
         ),
         html.Label("PRODUCTO DE LA ACTIVIDAD ECONÓMICA:"),
         dcc.Dropdown(
             id='actividad',
             options=[{"label": a, "value": a} for a in sorted(df['DESACT2'].dropna().unique())],
-            multi=True
+            multi=True,
+            optionHeight=50
         ),
         html.Label("Departamento de origen:"),
         dcc.Dropdown(
             id='departamento',
             options=[{"label": d, "value": d} for d in sorted(df['DESDEP'].dropna().unique())],
-            multi=True
+            multi=True,
+            optionHeight=50
         )
     ], className="filter-panel"),
 
@@ -170,15 +180,15 @@ def actualizar_dashboard(anio, mes, pais, producto, categoria, industria, activi
     ])
 
     fig_pais = px.bar(
-        dff.groupby("DESPAIS")["VALOR"].sum().reset_index().query("VALOR > 100000").sort_values("VALOR", ascending=True),
+        dff.groupby("DESPAIS")["VALOR"].sum().reset_index().query("VALOR > 0").sort_values("VALOR", ascending=True).head(10),
         x="VALOR", y="DESPAIS", orientation='h', title="🌍 Valor exportado por país de destino", template="plotly_white"
     )
     fig_producto = px.bar(
-        dff.groupby("DESACT2")["VALOR"].sum().reset_index().query("VALOR > 10000").sort_values("VALOR", ascending=True).head(10),
+        dff.groupby("DESACT2")["VALOR"].sum().reset_index().query("VALOR > 0").sort_values("VALOR", ascending=True).head(10),
         x="VALOR", y="DESACT2", orientation='h', title="📦 Top 10 productos", template="plotly_white"
     )
     fig_departamento = px.bar(
-        dff.groupby("DESDEP")["VALOR"].sum().reset_index().query("VALOR > 100000").sort_values("VALOR", ascending=True),
+        dff.groupby("DESDEP")["VALOR"].sum().reset_index().query("VALOR > 0").sort_values("VALOR", ascending=True),
         x="VALOR", y="DESDEP", orientation='h', title="🗺️ Valor exportado por departamento de origen", template="plotly_white"
     )
 
