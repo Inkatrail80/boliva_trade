@@ -18,6 +18,14 @@ for col in ['VALOR', 'KILNET']:
     if col in df.columns:
         df[col] = df[col].round(0)
 
+def apply_standard_layout(fig):
+    fig.update_layout(
+        font=dict(family="Arial", size=12),
+        title_font_size=20,
+        margin=dict(l=20, r=20, t=50, b=20),
+        xaxis_title="Valor exportado (USD)",
+    )
+    return fig
 
 # Dash App initialisieren
 app = Dash(__name__)
@@ -198,16 +206,6 @@ def actualizar_dashboard(anio, mes, pais, producto, categoria, industria, activi
     apply_standard_layout(fig_departamento)
 
 
-
-    def apply_standard_layout(fig):
-        fig.update_layout(
-            font=dict(family="Arial", size=12),
-            title_font_size=20,
-            margin=dict(l=20, r=20, t=50, b=20),
-            xaxis_title="Valor exportado (USD)",
-        )
-        return fig
-
     # Daten vorbereiten
     df_treemap = dff.copy()
     df_treemap = df_treemap[df_treemap['VALOR'] > 0]
@@ -230,8 +228,6 @@ def actualizar_dashboard(anio, mes, pais, producto, categoria, industria, activi
         hovertemplate="<b>%{label}</b><br>%{customdata[0]}<extra></extra>"
     )
 
-
-
     for fig in [fig_pais, fig_producto, fig_departamento]:
         valores = [trace.x for trace in fig.data][0]
         labels = [f"{int(v):,}".replace(",", "'") for v in valores]
@@ -239,7 +235,6 @@ def actualizar_dashboard(anio, mes, pais, producto, categoria, industria, activi
         fig.update_traces(hovertemplate="%{y}<br>USD %{customdata}")
 
     return kpi_html, fig_pais, fig_producto, fig_departamento, fig_treemap
-
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 8050))
