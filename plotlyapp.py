@@ -181,19 +181,19 @@ def actualizar_dashboard(anio, mes, pais, producto, categoria, industria, activi
 
     fig_pais = px.bar(
         dff.groupby("DESPAIS")["VALOR"].sum().reset_index().query("VALOR > 0").sort_values("VALOR", ascending=True),
-        x="VALOR", y="Pais de Destino", orientation='h', title="🌍 Valor exportado por país de destino", template="plotly_white"
+        x="VALOR", y="DESPAIS", orientation='h', title="🌍 Valor exportado por país de destino", template="plotly_white"
     )
     apply_standard_layout(fig_pais)
 
     fig_producto = px.bar(
         dff.groupby("DESACT2")["VALOR"].sum().reset_index().query("VALOR > 0").sort_values("VALOR", ascending=True),
-        x="VALOR", y="Producto", orientation='h', title="📦 Top 10 productos", template="plotly_white"
+        x="VALOR", y="DESACT2", orientation='h', title="📦 Top 10 productos", template="plotly_white"
     )
     apply_standard_layout(fig_producto)
 
     fig_departamento = px.bar(
         dff.groupby("DESDEP")["VALOR"].sum().reset_index().query("VALOR > 0").sort_values("VALOR", ascending=True),
-        x="VALOR", y="Departamento", orientation='h', title="🗺️ Valor exportado por departamento de origen", template="plotly_white"
+        x="VALOR", y="DESDEP", orientation='h', title="🗺️ Valor exportado por departamento de origen", template="plotly_white"
     )
     apply_standard_layout(fig_departamento)
 
@@ -203,7 +203,8 @@ def actualizar_dashboard(anio, mes, pais, producto, categoria, industria, activi
         fig.update_layout(
             font=dict(family="Arial", size=12),
             title_font_size=20,
-            margin=dict(l=20, r=20, t=50, b=20)
+            margin=dict(l=20, r=20, t=50, b=20),
+            xaxis_title="Valor exportado (USD)",
         )
         return fig
 
