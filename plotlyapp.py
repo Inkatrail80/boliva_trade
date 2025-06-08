@@ -30,7 +30,7 @@ def chf_format(value):
 
 def no_data_fig(message="⚠️ Keine Daten für die aktuelle Auswahl."):
     fig = px.scatter(title=message)
-    return html.Div(message), fig, fig, fig, fig, fig
+    return html.Div(message), fig, fig, fig, fig, fig, fig
 
 
 def apply_standard_layout(fig):
@@ -67,7 +67,7 @@ def filter_df(df, anio, mes, pais, producto, categoria, industria, actividad, de
 
 def create_sankey(df_sankey):
     labels = pd.unique(df_sankey['DESDEP'].tolist() +
-                       df_sankey['DESGCE3'].tolist() +
+                       df_sankey['DESACT2'].tolist() +
                        df_sankey['DESPAIS'].tolist()).tolist()
     label_index = {label: i for i, label in enumerate(labels)}
 
@@ -75,11 +75,11 @@ def create_sankey(df_sankey):
 
     for _, row in df_sankey.iterrows():
         sources.append(label_index[row['DESDEP']])
-        targets.append(label_index[row['DESGCE3']])
+        targets.append(label_index[row['DESACT2']])
         values.append(row['VALOR'])
 
     for _, row in df_sankey.iterrows():
-        sources.append(label_index[row['DESGCE3']])
+        sources.append(label_index[row['DESACT2']])
         targets.append(label_index[row['DESPAIS']])
         values.append(row['VALOR'])
 
@@ -94,7 +94,8 @@ def create_sankey(df_sankey):
         "layout": dict(
             title="🔀 Flujo: Departamento → Producto → País de destino",
             font=dict(size=14),
-            margin=dict(t=50, l=0, r=0, b=50)
+            margin=dict(t=50, l=0, r=0, b=50),
+            height=1200
         )
     }
 
@@ -134,8 +135,9 @@ app.layout = html.Div([
         dcc.Graph(id='grafico-departamento'),
         dcc.Graph(id='grafico-pais'),
         dcc.Graph(id='grafico-producto'),
-        dcc.Graph(id='grafico-sankey', style={"height": "150vh"}),
-        dcc.Graph(id='grafico-treemap')
+        dcc.Graph(id='grafico-sankey'),
+        dcc.Graph(id='grafico-treemap'),
+        dcc.Graph(id='grafico-bubble')
     ])
 ])
 
@@ -146,7 +148,8 @@ app.layout = html.Div([
      Output('grafico-producto', 'figure'),
      Output('grafico-departamento', 'figure'),
      Output('grafico-treemap', 'figure'),
-     Output('grafico-sankey', 'figure')],
+     Output('grafico-sankey', 'figure'),
+     Output('grafico-bubble', 'figure')],
     [Input('anio', 'value'), Input('mes', 'value'), Input('pais', 'value'),
      Input('producto', 'value'), Input('categoria', 'value'), Input('industria', 'value'),
      Input('actividad', 'value'), Input('departamento', 'value')]
@@ -188,10 +191,29 @@ def actualizar_dashboard(anio, mes, pais, producto, categoria, industria, activi
                              title="📂 Exportaciones", color_continuous_scale='YlGnBu')
     fig_treemap.update_layout(margin=dict(t=100, l=100, r=100, b=100), font=dict(size=16))
 
-    df_sankey = dff.groupby(['DESDEP', 'DESGCE3', 'DESPAIS'])['VALOR'].sum().reset_index()
+    df_sankey = dff.groupby(['DESDEP', 'DESACT2', 'DESPAIS'])['VALOR'].sum().reset_index()
     fig_sankey = create_sankey(df_sankey)
 
-    return kpi_html, fig_pais, fig_producto, fig_departamento, fig_treemap, fig_sankey
+    fig_bubble = px.scatter(
+        dff,
+        x="VALOR",
+        y="KILNET",
+        size="VALOR",
+        color="DESGCE3",
+        hover_data=["DESNAN", "DESPAIS", "DESDEP"],
+        title="💬 Exportwert vs. Gewicht nach Kategorie (Bubble Chart)",
+        template="plotly_white",
+        size_max=60
+    )
+    fig_bubble.update_layout(
+        xaxis_title="Valor exportado (USD)",
+        yaxis_title="Peso Neto (kg)",
+        height=700,
+        margin=dict(l=40, r=40, t=80, b=40),
+        font=dict(size=14)
+    )
+
+    return kpi_html, fig_pais, fig_producto, fig_departamento, fig_treemap, fig_sankey, fig_bubble
 
 
 if __name__ == '__main__':
