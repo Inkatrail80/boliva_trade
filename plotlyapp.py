@@ -225,8 +225,17 @@ def actualizar_dashboard(anio, mes, pais, producto, categoria, industria, activi
         path=['DESCIIU3', 'DESNAN', 'DESACT2'],
         values='VALOR',
         title="📂 Exportaciones",
-        custom_data=['VALOR_TXT']
+        custom_data=['VALOR_TXT'],
+        color_continuous_scale='YlGnBu'
     )
+
+    fig_treemap.update_layout(
+    margin=dict(t=100, l=100, r=100, b=100),
+    title_font_size=20,
+    font=dict(family="Arial", size=16),
+    paper_bgcolor="white",
+    plot_bgcolor="white"
+)
 
     return kpi_html, fig_pais, fig_producto, fig_departamento, fig_treemap
 
