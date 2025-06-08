@@ -146,41 +146,6 @@ def sync_producto(clickData, current):
         return current + [val] if current and val not in current else current or [val]
     return current
 
-
-@app.callback(
-    Output('industria', 'value'),
-    Input('grafico-treemap', 'clickData'),
-    State('industria', 'value')
-)
-def sync_treemap_industria(clickData, current):
-    if clickData and 'points' in clickData:
-        val = clickData['points'][0]['id'].split("/")[1]  # DESCIIU3
-        return current + [val] if current and val not in current else current or [val]
-    return current
-
-@app.callback(
-    Output('producto', 'value'),
-    Input('grafico-treemap', 'clickData'),
-    State('producto', 'value')
-)
-def sync_treemap_producto(clickData, current):
-    if clickData and 'points' in clickData and len(clickData['points'][0]['id'].split("/")) > 2:
-        val = clickData['points'][0]['id'].split("/")[2]  # DESNAN
-        return current + [val] if current and val not in current else current or [val]
-    return current
-
-@app.callback(
-    Output('actividad', 'value'),
-    Input('grafico-treemap', 'clickData'),
-    State('actividad', 'value')
-)
-def sync_treemap_actividad(clickData, current):
-    if clickData and 'points' in clickData and len(clickData['points'][0]['id'].split("/")) > 3:
-        val = clickData['points'][0]['id'].split("/")[3]  # DESACT2
-        return current + [val] if current and val not in current else current or [val]
-    return current
-
-
 # Dashboard-Callback inkl. Treemap
 @app.callback(
     [Output('kpis', 'children'),
@@ -269,8 +234,7 @@ def actualizar_dashboard(anio, mes, pais, producto, categoria, industria, activi
     title_font_size=20,
     font=dict(family="Arial", size=16),
     paper_bgcolor="white",
-    plot_bgcolor="white",
-    uniformtext=dict(minsize=12),
+    plot_bgcolor="white"
 )
 
     return kpi_html, fig_pais, fig_producto, fig_departamento, fig_treemap
