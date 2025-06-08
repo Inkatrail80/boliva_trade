@@ -102,7 +102,12 @@ app.layout = html.Div([
         dcc.Graph(id='grafico-departamento', clear_on_unhover=True),
         dcc.Graph(id='grafico-pais', clear_on_unhover=True),
         dcc.Graph(id='grafico-producto', clear_on_unhover=True),
-        dcc.Graph(id='grafico-treemap', clear_on_unhover=True)
+        
+        # Treemap separat mit 50% Breite
+        html.Div(
+            dcc.Graph(id='grafico-treemap', clear_on_unhover=True),
+            className="treemap-fig"
+        )
     ], className="output-panel")
 ])
 
@@ -210,7 +215,6 @@ def actualizar_dashboard(anio, mes, pais, producto, categoria, industria, activi
     # Daten vorbereiten
     df_treemap = dff.copy()
     df_treemap = df_treemap[df_treemap['VALOR'] > 0]
-    
     # Treemap erstellen mit 'VALOR_TXT' als customdata
     fig_treemap = px.treemap(
         df_treemap,

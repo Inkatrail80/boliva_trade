@@ -12,6 +12,15 @@ body {
     padding: 20px;
 }
 
+.treemap-fig {
+    width: 50%;
+    height: 100vh;
+    display: inline-block;
+    vertical-align: top;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
 /* Filterpanel – oben */
 .filter-panel {
     padding: 20px;
