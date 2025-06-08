@@ -190,13 +190,13 @@ def actualizar_dashboard(anio, mes, pais, producto, categoria, industria, activi
 
     fig_pais = px.bar(
         dff.groupby("DESPAIS")["VALOR"].sum().reset_index().query("VALOR > 0").sort_values("VALOR", ascending=False).head(15).sort_values("VALOR", ascending=True),
-        x="VALOR", y="DESPAIS", orientation='h', title="🌍 Valor exportado por país de destino", template="plotly_white"
+        x="VALOR", y="DESPAIS", orientation='h', title="🌍 top 15 paises de destino", template="plotly_white"
     )
     apply_standard_layout(fig_pais)
 
     fig_producto = px.bar(
         dff.groupby("DESACT2")["VALOR"].sum().reset_index().query("VALOR > 0").sort_values("VALOR", ascending=False).head(15).sort_values("VALOR", ascending=True),
-        x="VALOR", y="DESACT2", orientation='h', title="📦 Top 10 productos", template="plotly_white"
+        x="VALOR", y="DESACT2", orientation='h', title="📦 Top 15 productos", template="plotly_white"
     )
     apply_standard_layout(fig_producto)
 
@@ -210,10 +210,7 @@ def actualizar_dashboard(anio, mes, pais, producto, categoria, industria, activi
     # Daten vorbereiten
     df_treemap = dff.copy()
     df_treemap = df_treemap[df_treemap['VALOR'] > 0]
-
-    # Schweizer Format als Textspalte
-    df_treemap['VALOR_TXT'] = df_treemap['VALOR'].apply(lambda x: f"USD {x:,.0f}".replace(",", "'"))
-
+    
     # Treemap erstellen mit 'VALOR_TXT' als customdata
     fig_treemap = px.treemap(
         df_treemap,
@@ -222,17 +219,6 @@ def actualizar_dashboard(anio, mes, pais, producto, categoria, industria, activi
         title="📂 Exportaciones",
         custom_data=['VALOR_TXT']
     )
-
-    # Tooltip mit selbst formatierter Zahl (aus customdata[0])
-    fig_treemap.update_traces(
-        hovertemplate="<b>%{label}</b><br>%{customdata[0]}<extra></extra>"
-    )
-
-    for fig in [fig_pais, fig_producto, fig_departamento]:
-        valores = [trace.x for trace in fig.data][0]
-        labels = [f"{int(v):,}".replace(",", "'") for v in valores]
-        fig.update_traces(customdata=labels)
-        fig.update_traces(hovertemplate="%{y}<br>USD %{customdata}")
 
     return kpi_html, fig_pais, fig_producto, fig_departamento, fig_treemap
 
