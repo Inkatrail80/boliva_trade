@@ -234,11 +234,13 @@ def actualizar_dashboard(anio, mes, pais, producto, categoria, industria, activi
     title_font_size=20,
     font=dict(family="Arial", size=16),
     paper_bgcolor="white",
-    plot_bgcolor="white"
+    plot_bgcolor="white",
+    uniformtext=dict(minsize=12),
+    height=None  # Ermöglicht dynamische Höhenanpassung über dcc.Graph(style)
 )
 
     return kpi_html, fig_pais, fig_producto, fig_departamento, fig_treemap
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 8050))
-    app.run(host='0.0.0.0', port=port, debug=True)
+    app.run(host='0.0.0.0', port=port, debug=False)
