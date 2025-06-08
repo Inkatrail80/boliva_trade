@@ -215,6 +215,10 @@ def actualizar_dashboard(anio, mes, pais, producto, categoria, industria, activi
     # Daten vorbereiten
     df_treemap = dff.copy()
     df_treemap = df_treemap[df_treemap['VALOR'] > 0]
+
+    # Schweizer Format als Textspalte
+    df_treemap['VALOR_TXT'] = df_treemap['VALOR'].apply(lambda x: f"USD {x:,.0f}".replace(",", "'"))
+
     # Treemap erstellen mit 'VALOR_TXT' als customdata
     fig_treemap = px.treemap(
         df_treemap,
