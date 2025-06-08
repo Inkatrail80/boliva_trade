@@ -188,13 +188,13 @@ def actualizar_dashboard(anio, mes, pais, producto, categoria, industria, activi
     ])
 
     fig_pais = px.bar(
-        dff.groupby("DESPAIS")["VALOR"].sum().reset_index().query("VALOR > 0").sort_values("VALOR", ascending=True).head(15),
+        dff.groupby("DESPAIS")["VALOR"].sum().reset_index().query("VALOR > 0").sort_values("VALOR", ascending=False).head(15).sort_values("VALOR", ascending=True),
         x="VALOR", y="DESPAIS", orientation='h', title="🌍 Valor exportado por país de destino", template="plotly_white"
     )
     apply_standard_layout(fig_pais)
 
     fig_producto = px.bar(
-        dff.groupby("DESACT2")["VALOR"].sum().reset_index().query("VALOR > 0").sort_values("VALOR", ascending=True).head(15),
+        dff.groupby("DESACT2")["VALOR"].sum().reset_index().query("VALOR > 0").sort_values("VALOR", ascending=False).head(15).sort_values("VALOR", ascending=True),
         x="VALOR", y="DESACT2", orientation='h', title="📦 Top 10 productos", template="plotly_white"
     )
     apply_standard_layout(fig_producto)
