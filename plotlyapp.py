@@ -67,7 +67,7 @@ def filter_df(df, anio, mes, pais, producto, categoria, industria, actividad, de
 
 def create_sankey(df_sankey):
     labels = pd.unique(df_sankey['DESDEP'].tolist() +
-                       df_sankey['DESACT2'].tolist() +
+                       df_sankey['DESGCE3'].tolist() +
                        df_sankey['DESPAIS'].tolist()).tolist()
     label_index = {label: i for i, label in enumerate(labels)}
 
@@ -75,11 +75,11 @@ def create_sankey(df_sankey):
 
     for _, row in df_sankey.iterrows():
         sources.append(label_index[row['DESDEP']])
-        targets.append(label_index[row['DESACT2']])
+        targets.append(label_index[row['DESGCE3']])
         values.append(row['VALOR'])
 
     for _, row in df_sankey.iterrows():
-        sources.append(label_index[row['DESACT2']])
+        sources.append(label_index[row['DESGCE3']])
         targets.append(label_index[row['DESPAIS']])
         values.append(row['VALOR'])
 
