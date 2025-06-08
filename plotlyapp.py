@@ -135,9 +135,9 @@ app.layout = html.Div([
         dcc.Graph(id='grafico-departamento'),
         dcc.Graph(id='grafico-pais'),
         dcc.Graph(id='grafico-producto'),
-        dcc.Graph(id='grafico-sankey'),
+        dcc.Graph(id='grafico-sankey', style={"height": "150vh"}),
         dcc.Graph(id='grafico-treemap'),
-        dcc.Graph(id='grafico-bubble')
+        dcc.Graph(id='grafico-bubble', style={"height": "150vh"})
     ])
 ])
 
