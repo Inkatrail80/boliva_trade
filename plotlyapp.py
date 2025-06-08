@@ -188,7 +188,7 @@ def actualizar_dashboard(anio, mes, pais, producto, categoria, industria, activi
                              title="📂 Exportaciones", color_continuous_scale='YlGnBu')
     fig_treemap.update_layout(margin=dict(t=100, l=100, r=100, b=100), font=dict(size=16))
 
-    df_sankey = dff.groupby(['DESDEP', 'DESACT2', 'DESPAIS'])['VALOR'].sum().reset_index()
+    df_sankey = dff.groupby(['DESDEP', 'DESGCE3', 'DESPAIS'])['VALOR'].sum().reset_index()
     fig_sankey = create_sankey(df_sankey)
 
     return kpi_html, fig_pais, fig_producto, fig_departamento, fig_treemap, fig_sankey
