@@ -192,7 +192,7 @@ def actualizar_dashboard(anio, mes, pais, producto, categoria, industria, activi
     # Treemap erstellen mit 'VALOR_TXT' als customdata
     fig_treemap = px.treemap(
         df_treemap,
-        path=['DESCIIU3', 'DESACT2', 'DESNAN'],
+        path=['DESCIIU3', 'DESNAN', 'DESACT2'],
         values='VALOR',
         title="📂 Exportaciones por industria > actividad > producto",
         template="plotly_white",
