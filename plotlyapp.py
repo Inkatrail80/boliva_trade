@@ -24,6 +24,7 @@ def apply_standard_layout(fig):
         title_font_size=30,
         margin=dict(l=50, r=50, t=50, b=50),
         xaxis_title="Valor exportado (USD)",
+        yaxis_title=""
     )
     return fig
 
