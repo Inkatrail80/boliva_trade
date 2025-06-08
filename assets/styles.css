@@ -1,28 +1,35 @@
 /* Allgemeines Styling */
 body {
     font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Container für Filter + Output */
+.main-container {
+    display: flex;
+    flex-direction: column;  /* Filter oben, dann Output */
+    padding: 20px;
+}
+
+/* Filterpanel – oben */
+.filter-panel {
+    padding: 20px;
+    box-sizing: border-box;
+    background-color: #f5f5f5;
+    margin-bottom: 20px;
+}
+
+/* Ausgabepanel – darunter */
+.output-panel {
+    padding: 20px;
+    box-sizing: border-box;
 }
 
 /* Titel */
 h1 {
     text-align: center;
     margin-bottom: 20px;
-}
-
-/* Linke Filterspalte */
-.filter-panel {
-    width: 25%;
-    float: left;
-    padding: 20px;
-    box-sizing: border-box;
-}
-
-/* Rechte Ausgabespalte */
-.output-panel {
-    width: 65%;
-    float: right;
-    padding: 50px;
-    box-sizing: border-box;
 }
 
 /* Dropdown-Beschriftung */

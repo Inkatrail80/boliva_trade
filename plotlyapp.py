@@ -218,8 +218,7 @@ def actualizar_dashboard(anio, mes, pais, producto, categoria, industria, activi
         df_treemap,
         path=['DESCIIU3', 'DESNAN', 'DESACT2'],
         values='VALOR',
-        title="📂 Exportaciones por industria > actividad > producto",
-        template="plotly_white",
+        title="📂 Exportaciones",
         custom_data=['VALOR_TXT']
     )
 
