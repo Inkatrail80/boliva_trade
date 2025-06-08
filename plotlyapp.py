@@ -20,9 +20,9 @@ for col in ['VALOR', 'KILNET']:
 
 def apply_standard_layout(fig):
     fig.update_layout(
-        font=dict(family="Arial", size=12),
-        title_font_size=20,
-        margin=dict(l=20, r=20, t=50, b=20),
+        font=dict(family="Arial", size=20),
+        title_font_size=40,
+        margin=dict(l=50, r=50, t=50, b=50),
         xaxis_title="Valor exportado (USD)",
     )
     return fig
